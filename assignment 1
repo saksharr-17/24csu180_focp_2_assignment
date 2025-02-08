@@ -1,0 +1,198 @@
+//Q1
+#include <iostream>
+
+using namespace std;
+int main() {
+    int num;
+
+    cout << "Enter an integer: ";
+    cin >> num;
+
+    int i=2;
+    while(i<=num-1)
+    {
+       if(num%i==0)
+       {
+           cout<<"not a prime number"<<endl;
+           break;
+       }
+       i++;
+    }
+    if(i==num){
+        cout<<"prime number"<<endl;
+        int next=num+1;
+        int i=2;
+        while(i<=next-1){
+            if(next%i==0){
+                break;
+            }
+            i++;
+        }
+        cout<<next;
+    }
+   
+    else{
+         cout << "Factors of " << num << " are: ";
+         for (int i = 1; i <= num; i++){
+             if (num % i == 0){
+                cout << i << " ";
+             }
+         }
+    }
+
+    return 0;
+}
+
+
+//Q2
+#include <iostream>
+
+using namespace std;
+
+int main() {
+    int size,largest, secondLargest, smallest, secondSmallest;
+
+    cout << "Enter the size of the array ";
+    cin >> size;
+    
+    int arr[size];
+
+    cout << "Enter " << size << " integers:" << endl;
+    for (int i = 0; i < size; i++) {
+        cin >> arr[i];
+    }
+
+    cout << "Reversed array: ";
+    for (int i = size - 1; i >= 0; i--) {
+        cout << arr[i] << " ";
+    }
+    cout << endl;
+    
+    if (arr[0] > arr[1]){
+        largest = arr[0];
+        secondLargest = arr[1];
+        smallest = arr[1];
+        secondSmallest = arr[0];
+    }
+    else{
+        largest = arr[1];
+        secondLargest = arr[0];
+        smallest = arr[0];
+        secondSmallest = arr[1];
+    }
+    
+    for (int i = 2; i < size; i++){
+        if (arr[i] > largest){
+            secondLargest = largest;
+            largest = arr[i];
+        }
+        else if (arr[i] > secondLargest && arr[i] < largest){
+            secondLargest = arr[i];
+        }
+        
+        if (arr[i] < smallest){
+            secondSmallest = smallest;
+            smallest = arr[i];
+        }
+        
+        else if (arr[i] < secondSmallest && arr[i] > smallest){
+            secondSmallest = arr[i];
+        }
+    }
+    
+    cout << "Second largest element: " <<secondLargest<<endl;
+    cout << "Second smallest element: " <<secondSmallest<<endl;
+    
+    
+    return 0;
+}
+
+
+//Q3
+#include <iostream>
+#include <string>
+#include <algorithm> 
+
+
+using namespace std;
+
+bool isPalindrome(const string& str) {
+    string reversedStr = str;
+   
+    reverse(reversedStr.begin(), reversedStr.end());
+    
+    return str == reversedStr;
+}
+
+int main() {
+    string input;
+    int frequency[128] = {0};
+    
+    
+    cout << "Enter a string: ";
+    getline(cin, input); 
+
+    if (isPalindrome(input)) {
+        cout << "\"" << input << "\" is a palindrome." << endl;
+    } else {
+        cout << "\"" << input << "\" is not a palindrome." << endl;
+    }
+    
+    for (char c:input){
+        frequency[(int)c]++;
+    }
+    
+    cout << "Character frequencies:" << endl;
+    for (int i = 0; i < 128; i++){
+        if (frequency[i] > 0){
+            cout << "'" << (char)i << "' : " << frequency[i] << endl;
+        }
+    }
+    for (char& c : input){
+        if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' || c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U'){
+            c = '*';
+        }
+    }
+    
+    cout << "Modified string: " << input << endl;
+    return 0;
+}
+
+
+//Q5
+#include<iostream>
+using namespace std;
+int main()
+{
+    int m,n;
+    cout<<"Enter the number of rows and columns: "<<endl;
+    cin>>m>>n;
+    int arr[m][n];
+    cout<<"Enter the elements in the array"<<endl;
+    for(int r=0;r<m;r++)
+    {
+        for(int c=0;c<n;c++)
+        {
+            cin>>arr[r][c];   
+        }
+    }
+    for(int r=0;r<m;r++)
+    {
+        for(int c=0;c<n;c++)
+        {
+            cout<<arr[r][c]<<" ";   
+        }
+        cout<<endl;
+    }
+    cout<<"\nRotated matrix: "<<endl;
+    for(int c=0;c<n;c++)
+    {
+        for(int r=m-1;r>=0;r--)
+        {
+            cout<<arr[r][c]<<" ";
+        }
+        cout<<endl;
+    }
+return 0;
+}
+
