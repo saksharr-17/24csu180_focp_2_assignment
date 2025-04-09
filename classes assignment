@@ -1,0 +1,83 @@
+#include <iostream>
+using namespace std;
+
+class Student{
+private:
+    string name;
+    int rno;
+    float cgpa;
+    string courses[50];
+    int coursecount;
+    
+public:
+    Student(){
+        name="unknown";
+        rno=0;
+        cgpa=0;
+        coursecount=0;
+    }
+    
+    Student(string a,int b,float c){
+        name=a;
+        rno=b;
+        cgpa=c;
+        coursecount=0;
+    }
+    
+    Student(const Student& other){
+        name=other.name;
+        rno=other.rno;
+        cgpa=other.cgpa;
+        coursecount = other.coursecount;
+        for (int i = 0; i < coursecount; i++) {
+            courses[i] = other.courses[i];
+        }
+    }
+    
+    void enrollCourse(const string& course) {
+        if (coursecount < 50) {
+            courses[coursecount++] = course;
+        } else {
+            cout << "Cannot enroll more courses. Maximum limit reached." << endl;
+        }
+    }
+
+    void addCourses(const string courses[], int numCourses) {
+        for (int i = 0; i < numCourses; ++i) {
+            enrollCourse(courses[i]);
+        }
+    }
+    
+    void updatecgpa(){
+        float cg;
+        cout<<"Enter the updated cgpa";
+        cin>>cg;
+        cgpa=cg;
+        cout<<"Updated cgpa: "<<cgpa<<endl;
+    }
+    
+    void disp(){
+        cout<<"Name: "<<name<<endl;
+        cout<<"Roll no: "<<rno<<endl;
+        cout<<"cgpa: "<<cgpa<<endl;
+        cout << "Enrolled courses: ";
+        for (int i = 0; i < coursecount; ++i) {
+            cout << courses[i] << " ";
+        }
+        cout << endl;
+        
+    }
+    ~Student(){
+        cout<<"class has been destroyed";
+    }
+};
+int main() {
+   Student s1("Sam",24,8.9);
+   s1.updatecgpa();
+   string courseList[] = {"Math", "Physics", "Chemistry"};
+   s1.addCourses(courseList, 3);
+   s1.disp();
+   
+
+    return 0;
+}
