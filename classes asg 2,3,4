@@ -1,0 +1,413 @@
+#include <iostream>
+#include <string>
+#include <limits>
+#include <stdexcept>
+using namespace std;
+
+class Person{
+public:
+    string name;
+    int age;
+    int ID;
+    int contactinfo;
+
+    Person(string a,int b,int c,int d){
+        name=a;
+        age=b;
+        ID=c;
+        contactinfo=d;
+    }
+
+    ~Person(){
+        cout << "Person destructor called for: " << name << endl;
+    }
+    
+    void setname(string s){
+        if (s.empty()) {
+            throw invalid_argument("Name cannot be empty.");
+        }
+        name=s;
+    }
+    string getname(){
+        return name;
+    }
+    void setage(int s){
+        if (s <= 0 || s > 150) 
+        {
+            throw invalid_argument("Age must be a positive and reasonable value.");
+        }
+        age=s;
+    }
+    int getage(){
+        return age;
+    }
+    void setID(int s){
+        ID=s;
+    }
+    int getID(){
+        return ID;
+    }
+    void setcontact(int s){
+        contactinfo=s;
+    }
+    int getcontact(){
+        return contactinfo;
+    }
+    
+
+    virtual void displayDetails() {
+        cout << "Name: " << name << endl
+             << "Age: " << age << endl
+             << "ID: " << ID << endl
+             << "Contact Info: " << contactinfo << endl;
+    }
+};
+
+class Student:public Person{
+public:
+    int enrollmentDate;
+    string program;
+    float GPA;
+
+    Student(string a,int b,int c,int d,int e,string f,float g):Person(a,b,c,d)
+    {
+        enrollmentDate=e;
+        program=f;
+        GPA=g;
+    }
+
+    ~Student(){
+        cout << "Student destructor called for program: " << program << endl;
+    }
+    
+    void setenrollment(int s){
+        enrollmentDate=s;
+    }
+    int getenrollment(){
+        return enrollmentDate;
+    }
+    void setprogram(string s){
+        program=s;
+    }
+    string getprogram(){
+        return program;
+    }
+    void setcgpa(float s){
+        if (s < 0.0 || s > 4.0) {
+            throw invalid_argument("GPA must be between 0.0 and 4.0.");
+        }
+        GPA=s;
+    }
+    float getcgpa(){
+        return GPA;
+    }
+
+    void displayDetails() override {
+        Person::displayDetails();
+        cout << "Enrollment Date: " << enrollmentDate << endl
+             << "Program: " << program << endl
+             << "GPA: " << GPA << endl;
+    }
+};
+
+class Professor:public Person{
+public:
+    string department;
+    string specialization;
+    int hiredate;
+
+    Professor(string a,int b,int c,int d,string e,string f,int g):Person(a,b,c,d){
+        department=e;
+        specialization=f;
+        hiredate=g;
+    }
+
+    ~Professor(){
+        cout << "Professor destructor called for department: " << department << endl;
+    }
+    
+    void setdept(string s){
+        department=s;
+    }
+    string getdept(){
+        return department;
+    }
+    void setspecialization(string s){
+        specialization=s;
+    }
+    string getspecialization(){
+        return specialization;
+    }
+    void sethire(int s){
+        hiredate=s;
+    }
+    int gethire(){
+        return hiredate;
+    }
+
+    virtual void displayDetails() override {
+        Person::displayDetails();
+        cout << "Department: " << department << endl
+             << "Specialization: " << specialization << endl
+             << "Hiredate: " << hiredate << endl;
+    }
+};
+
+class Course{
+private:
+    int code;
+    string title;
+    int credits;
+    string description;
+
+public:
+    Course(int a,string b,int c,string d){
+        code=a;
+        title=b;
+        credits=c;
+        description=d;
+    }
+
+    ~Course(){
+        cout << "Course destructor called for: " << title << endl;
+    }
+    
+    void setcode(int s){
+        code=s;
+    }
+    int getcode(){
+        return code;
+    }
+    void settitle(string s){
+        title=s;
+    }
+    string gettitle(){
+        return title;
+    }
+    void setcredits(int s){
+        if (s <= 0) {
+            throw invalid_argument("Course credits must be positive.");
+        }
+        credits=s;
+    }
+    int getcredits(){
+        return credits;
+    }
+    void setdescp(string s){
+        description=s;
+    }
+    string getdescp(){
+        return description;
+    }
+
+    void disp(){
+        cout << "Code: " << code << endl << "Title: " << title << endl << "Credits: " << credits << endl << "Description: " << description << endl;
+    }
+};
+
+class Department{
+private:
+    string name;
+    string location;
+    float budget;
+
+public:
+    Department(string a,string b,float c){
+        name=a;
+        location=b;
+        budget=c;
+    }
+
+    ~Department(){
+        cout << "Department destructor called for: " << name << endl;
+    }
+    
+    void setname(string s){
+        name=s;
+    }
+    string getname(){
+        return name;
+    }
+    void setlocn(string s){
+        location=s;
+    }
+    string getlocn(){
+        return location;
+    }
+    void setbudget(float s){
+        budget=s;
+    }
+    float getbudget(){
+        return budget;
+    }
+
+    void disp(){
+        cout << "Name: " << name << endl << "Location: " << location << endl << "Budget: " << budget << endl;
+    }
+};
+
+class UndergraduateStudent : public Student {
+public:
+    string major;
+    string minor;
+    int expectedGraduationDate;
+    UndergraduateStudent(string a, int b, int c, int d, int e, string f, float g ,string h ,string i, int j) 
+        : Student(a,b,c,d,e,f,g) 
+    {
+        major=h;
+        minor=i;
+        expectedGraduationDate=j;
+    }
+
+    ~UndergraduateStudent() {
+        cout << "UndergraduateStudent destructor called for program: " << program << endl;
+    }
+        void displayDetails() override {
+        cout << "--- Undergraduate Student ---" << endl;
+        Student::displayDetails();
+        cout << "Major: " << major << endl
+             << "Minor: " << minor << endl
+             << "Expected Graduation Date: " << expectedGraduationDate << endl;
+    }
+    
+};
+class GraduateStudent : public Student {
+public:
+    string researchTopic;
+    string advisor;
+    string thesisTitle;
+    GraduateStudent(string a, int b, int c, int d, int e, string f, float g, string h, string i, string j) 
+        : Student(a,b,c,d,e,f,g) 
+    {
+        researchTopic=h;
+        advisor=i;
+        thesisTitle=j;
+    }
+
+    ~GraduateStudent() {
+        cout << "GraduateStudent destructor called for program: " << program << endl;
+    }
+       void displayDetails() override {
+        cout << "--- Graduate Student ---" << endl;
+        Student::displayDetails();
+        cout << "Research Topic: " << researchTopic << endl
+             << "Advisor: " << advisor << endl
+             << "Thesis Title: " << thesisTitle << endl;
+    }
+    
+};
+
+class AssistantProfessor : public Professor {
+public:
+    int probationPeriodYears;
+    int teachingLoad;
+    AssistantProfessor(string a, int b, int c, int d, string e, string f, int g, int h, int i)
+        : Professor(a, b, c, d, e, f, g)
+    {
+        probationPeriodYears=h;
+        teachingLoad=i;
+    }
+
+    ~AssistantProfessor() {
+        cout << "AssistantProfessor destructor called for department: " << department << endl;
+    }
+
+    void displayDetails() override {
+        cout << "--- Assistant Professor ---" << endl;
+        Professor::displayDetails();
+        cout << "Probation Period (years): " << probationPeriodYears << endl
+             << "Teaching Load (courses/semester): " << teachingLoad << endl;
+    }
+};
+
+class AssociateProfessor : public Professor {
+public:
+    int tenureYear;
+    AssociateProfessor(string a, int b, int c, int d, string e, string f, int g,int h)
+        : Professor(a, b, c, d, e, f, g)
+    {
+        tenureYear=h;
+    }
+
+    ~AssociateProfessor() {
+        cout << "AssociateProfessor destructor called for department: " << department << endl;
+    }
+
+     void displayDetails() override {
+        cout << "--- Associate Professor ---" << endl;
+        Professor::displayDetails();
+        cout << "Tenure Year: " << tenureYear << endl;
+    }
+};
+
+class FullProfessor : public Professor {
+public:
+    int numberOfPublications;
+    FullProfessor(string a, int b, int c, int d, string e, string f, int g, int h)
+        : Professor(a, b, c, d, e, f, g)
+    {
+        numberOfPublications=h;
+    }
+
+    ~FullProfessor() {
+        cout << "FullProfessor destructor called for department: " << department << endl;
+    }
+
+    void displayDetails() override {
+        cout << "--- Full Professor ---" << endl;
+        Professor::displayDetails();
+        cout << "Number of Publications: " << numberOfPublications << endl;
+    }
+};
+int main() {
+    Person p1("Alex", 25, 1001, 1234567890);
+    Person p2("Allie", 26, 10345, 1276452536);
+    Student s1("Alex", 25, 1001, 1234567890,20232006, "Computer Science", 3.8);
+    Student s2("Allie", 26, 10345, 1276452536,20022006, "Computer Science", 5.6);
+    Professor prof1("Rob", 54, 1001, 1234567890,"Engineering", "Software", 20200815);
+    Professor prof2("Jamie", 63, 2004, 1234563456,"Engineering", "Software", 20453673);
+    Course c1(101, "Introduction to Programming", 3, "A foundational programming course.");
+    Course c2(234, "Scientific Research", 5, "Curious Researches.");
+    Department d1("Computer Science", "Building A", 100000.0);
+    Department d2("Computer Science", "Building C", 104530.0);
+    cout << "Objects created." << endl << endl;
+    UndergraduateStudent ug("Alice", 20, 3001, 5551234, 20220101, "History", 3.6, "History", "Philosophy", 20240601);
+    GraduateStudent grad("Bob", 25, 4001, 5555678, 20210101, "Physics", 3.9, "Quantum Computing", "Dr. Smith", "Entanglement in Qubits");
+    AssistantProfessor asstProf("Eve", 40, 5001, 1234567, "Engineering", "Electrical", 20150510, 3, 3);
+    AssociateProfessor assocProf("Frank", 45, 5002, 7654321, "Mathematics", "Algebra", 20100115, 2015);
+    FullProfessor fullProf("Grace", 55, 5003, 1122334, "Physics", "Quantum Mechanics", 19981230, 120);
+    
+    cout << "Displaying object information..." << endl;
+    p1.displayDetails();
+    cout << endl;
+    p2.displayDetails();
+    cout << endl;
+    s1.displayDetails();
+    cout << endl;
+    s2.displayDetails();
+    cout << endl;
+    prof1.displayDetails();
+    cout << endl;
+    prof2.displayDetails();
+    cout << endl;
+    c1.disp();
+    cout << endl;
+    c2.disp();
+    cout << endl;
+    d1.disp();
+    cout << endl;
+    d2.disp();
+    cout << endl;
+    ug.displayDetails();
+    cout << endl;
+    grad.displayDetails();
+    cout << endl; 
+    asstProf.displayDetails();
+    cout << endl;
+    assocProf.displayDetails();
+    cout << endl;
+    fullProf.displayDetails();
+    cout << endl;
+
+    return 0;
+}
